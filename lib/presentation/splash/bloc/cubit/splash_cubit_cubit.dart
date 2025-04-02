@@ -9,7 +9,7 @@ class SplashCubit extends Cubit<SplashState> {
     // Simulate a delay for the splash screen
     await Future.delayed(const Duration(seconds: 3), () {
       // Emit the authenticated state after the delay
-      emit(Authenticated());
+      emit(Unauthenticated());
     });
   }
 }
