@@ -1,13 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:moviezone/core/common/helpers/navigation/app_navigator.dart';
-import 'package:moviezone/core/configs/theme/app_colors.dart';
 import 'package:reactive_button/reactive_button.dart';
 
-import 'signup_screen.dart';
+import '../../../core/common/helpers/navigation/app_navigator.dart';
+import '../../../core/configs/theme/app_colors.dart';
+import 'signin_screen.dart';
 
-class SigninScreen extends StatelessWidget {
-  const SigninScreen({super.key});
+class SignupScreen extends StatelessWidget {
+  const SignupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +18,15 @@ class SigninScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _signInText(),
+            _signupText(),
             const SizedBox(height: 30),
             _emailTextField(),
             const SizedBox(height: 20),
             _passwordTextField(),
             const SizedBox(height: 60),
-            _signInButton(),
+            _signupButton(),
             const SizedBox(height: 20),
-            _signupText(context),
+            _signInText(context),
           ],
         ),
       ),
@@ -44,9 +44,33 @@ class SigninScreen extends StatelessWidget {
     );
   }
 
-  Widget _signInButton() {
+  Widget _signInText(BuildContext context) {
+    return Text.rich(
+      TextSpan(
+        text: 'Already have an account? ',
+        style: TextStyle(fontSize: 16),
+        children: [
+          TextSpan(
+            text: 'Sign In',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+            recognizer:
+                TapGestureRecognizer()
+                  ..onTap = () {
+                    // Handle sign up tap
+                    AppNavigator.push(
+                      context,
+                      const SigninScreen(), // Replace with your sign-up screen
+                    );
+                  },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _signupButton() {
     return ReactiveButton(
-      title: 'Sign In',
+      title: 'Sign Up',
       activeColor: AppColors.primary,
 
       onPressed: () async {},
@@ -59,34 +83,10 @@ class SigninScreen extends StatelessWidget {
     );
   }
 
-  Widget _signInText() {
+  Widget _signupText() {
     return const Text(
-      'Sign In',
+      'Sign Up',
       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-    );
-  }
-
-  Widget _signupText(BuildContext context) {
-    return Text.rich(
-      TextSpan(
-        text: 'Don\'t have an account? ',
-        style: TextStyle(fontSize: 16),
-        children: [
-          TextSpan(
-            text: 'Sign Up',
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
-            recognizer:
-                TapGestureRecognizer()
-                  ..onTap = () {
-                    // Handle sign up tap
-                    AppNavigator.push(
-                      context,
-                      const SignupScreen(), // Replace with your sign-up screen
-                    );
-                  },
-          ),
-        ],
-      ),
     );
   }
 }

@@ -47,7 +47,7 @@ class AppNavigator {
           return FadeTransition(opacity: animation, child: child);
         },
         transitionDuration: const Duration(
-          milliseconds: 500,
+          milliseconds: 700,
         ), // Adjust the duration if needed
       ),
     );
