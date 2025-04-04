@@ -1,8 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:moviezone/data/auth/repository/auth_repo_impl.dart';
-import 'package:moviezone/data/auth/sources/auth_api_services.dart';
 import 'package:moviezone/domain/auth/usecases/signup.dart';
+import 'package:moviezone/service_locator.dart';
 import 'package:reactive_button/reactive_button.dart';
 
 import '../../../core/common/helpers/navigation/app_navigator.dart';
@@ -85,23 +84,12 @@ class SignupScreen extends StatelessWidget {
       activeColor: AppColors.primary,
 
       onPressed: () async {
-        await SignupUseCase(
-              authRepository: AuthRepoImpl(
-                authApiServices: AuthApiServicesImpl(),
-              ),
-            )
-            .call(
-              params: SignupReqParams(
-                email: emailController.text,
-                password: passwordController.text,
-              ),
-            )
-            .then((value) {
-              value.fold(
-                (l) => print('Error: $l'),
-                (r) => print('Success: $r'),
-              );
-            });
+        await sl<SignupUseCase>().call(
+          params: SignupReqParams(
+            email: emailController.text,
+            password: passwordController.text,
+          ),
+        );
       },
       onSuccess: () {
         // Handle success

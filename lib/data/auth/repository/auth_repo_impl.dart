@@ -1,16 +1,13 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../domain/auth/repository/auth_repo.dart';
+import '../../../service_locator.dart';
 import '../models/signup_req_params.dart';
 import '../sources/auth_api_services.dart';
 
 class AuthRepoImpl extends AuthRepository {
-
-  AuthApiServices authApiServices;
-
-  AuthRepoImpl({ required this.authApiServices});
   @override
-  Future<Either> signIn() {
+  Future<Either> signIn( SignupReqParams signupReqParams) {
     // TODO: implement signIn
     throw UnimplementedError();
   }
@@ -22,8 +19,7 @@ class AuthRepoImpl extends AuthRepository {
   }
 
   @override
-  Future<Either> signUp( SignupReqParams signupReqParams) async {
-    return await authApiServices.signUp(signupReqParams);
+  Future<Either> signUp(SignupReqParams signupReqParams) async {
+    return await sl<AuthApiServices>().signUp(signupReqParams);
   }
-
 }
