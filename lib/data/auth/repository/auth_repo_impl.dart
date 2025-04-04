@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../domain/auth/repository/auth_repo.dart';
+import '../models/signup_req_params.dart';
 
 class AuthRepoImpl extends AuthRepository {
   @override
@@ -16,7 +17,7 @@ class AuthRepoImpl extends AuthRepository {
   }
 
   @override
-  Future<Either> signUp() {
+  Future<Either> signUp( SignupReqParams signupReqParams) {
     // TODO: implement signUp
     throw UnimplementedError();
   }
