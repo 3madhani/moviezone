@@ -81,7 +81,7 @@ class SigninScreen extends StatelessWidget {
                     // Handle sign up tap
                     AppNavigator.push(
                       context,
-                      const SignupScreen(), // Replace with your sign-up screen
+                       SignupScreen(), // Replace with your sign-up screen
                     );
                   },
           ),

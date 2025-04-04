@@ -1,13 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:moviezone/data/auth/repository/auth_repo_impl.dart';
+import 'package:moviezone/data/auth/sources/auth_api_services.dart';
+import 'package:moviezone/domain/auth/usecases/signup.dart';
 import 'package:reactive_button/reactive_button.dart';
 
 import '../../../core/common/helpers/navigation/app_navigator.dart';
 import '../../../core/configs/theme/app_colors.dart';
+import '../../../data/auth/models/signup_req_params.dart';
 import 'signin_screen.dart';
 
 class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
+  SignupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +41,17 @@ class SignupScreen extends StatelessWidget {
   }
 
   Widget _emailTextField() {
-    return TextField(decoration: InputDecoration(labelText: 'Email'));
+    return TextField(
+      controller: emailController,
+      decoration: const InputDecoration(hintText: 'Email'),
+    );
   }
 
   Widget _passwordTextField() {
     return TextField(
+      controller: passwordController,
       obscureText: true,
-      decoration: InputDecoration(labelText: 'Password'),
+      decoration: const InputDecoration(hintText: 'Password'),
     );
   }
 
@@ -73,7 +84,25 @@ class SignupScreen extends StatelessWidget {
       title: 'Sign Up',
       activeColor: AppColors.primary,
 
-      onPressed: () async {},
+      onPressed: () async {
+        await SignupUseCase(
+              authRepository: AuthRepoImpl(
+                authApiServices: AuthApiServicesImpl(),
+              ),
+            )
+            .call(
+              params: SignupReqParams(
+                email: emailController.text,
+                password: passwordController.text,
+              ),
+            )
+            .then((value) {
+              value.fold(
+                (l) => print('Error: $l'),
+                (r) => print('Success: $r'),
+              );
+            });
+      },
       onSuccess: () {
         // Handle success
       },
